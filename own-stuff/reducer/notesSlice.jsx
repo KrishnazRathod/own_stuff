@@ -1,12 +1,15 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const { DEV_URL } = process.env;
+
 const initialState = {
   notes: [],
 };
+console.log("DEV_URL:", DEV_URL);
 
 export const getNotes = createAsyncThunk("notes/get", async () => {
-  const response = await axios.get(`${process.env.DEV_URL}/notes`);
+  const response = await axios.get(`${DEV_URL}/notes`);
   return response.data;
 });
 
