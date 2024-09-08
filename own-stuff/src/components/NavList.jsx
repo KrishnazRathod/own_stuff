@@ -28,9 +28,6 @@ const NavList = () => {
             <ListItemIcon style={{ alignItems: "center" }}>
               {list.icon}
             </ListItemIcon>
-            {/* <ListItemIcon style={{ alignItems: 'center'}}>
-                            {list.icon}
-                        </ListItemIcon> */}
             <ListItemText primary={list.name} />
           </Link>
         </ListItem>
