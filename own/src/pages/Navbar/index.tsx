@@ -91,7 +91,7 @@ const Navbar = ({ setIsExpand, isExpand }: Properties) => {
             color={textColor}
             _hover={{ bg: hoverBg }}
           />
-          <Avatar size="sm" name="Profile" />
+          <Avatar size="md" name="Profile" />
         </HStack>
       </Flex>
     </Box>

@@ -1,13 +1,11 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import {
   Box,
   Flex,
   IconButton,
   Textarea,
   HStack,
-  Heading,
   useColorModeValue,
-  Text,
   Input,
   Button,
 } from "@chakra-ui/react";
@@ -17,7 +15,9 @@ import {
   MdOutlineColorLens,
   MdArchive,
   MdMoreVert,
+  MdDelete,
 } from "react-icons/md";
+import { GoPin } from "react-icons/go";
 
 const ExpandableInputComponent = () => {
   // State to track whether the component is expanded or collapsed
@@ -60,6 +60,7 @@ const ExpandableInputComponent = () => {
       <Flex
         justifyContent="space-between"
         mb={2}
+        gap={1}
         cursor="pointer"
         onClick={() => {
           setIsExpanded(true);
@@ -68,7 +69,7 @@ const ExpandableInputComponent = () => {
         <Input color={textColor} placeholder="Basic usage" />
         <IconButton
           size="md"
-          icon={<AttachmentIcon />}
+          icon={<GoPin />}
           aria-label="Pin"
           bg="transparent"
           color={iconColor}
@@ -121,6 +122,14 @@ const ExpandableInputComponent = () => {
           <IconButton
             size="md"
             icon={<MdMoreVert />}
+            aria-label="More"
+            bg="transparent"
+            color={iconColor}
+            _hover={{ bg: hoverBg }}
+          />
+          <IconButton
+            size="md"
+            icon={<MdDelete />}
             aria-label="More"
             bg="transparent"
             color={iconColor}
