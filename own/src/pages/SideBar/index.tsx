@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
 import {
   Box,
@@ -8,6 +9,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { SearchIcon, RepeatIcon, SettingsIcon } from "@chakra-ui/icons";
+import { MdLabel } from "react-icons/md";
 
 interface Properties {
   isExpand?: any;
@@ -24,7 +26,7 @@ const Sidebar = ({ isExpand }: Properties) => {
       <Box
         bg={bgColor}
         w={isExpand ? "200px" : "60px"}
-        h="100vh"
+        h="95%"
         p={4}
         color={textColor}
         transition="width 0.2s"
@@ -33,7 +35,7 @@ const Sidebar = ({ isExpand }: Properties) => {
           <Flex align="center" w="full">
             <IconButton
               size="md"
-              icon={<SearchIcon />}
+              icon={<MdLabel />}
               aria-label="Search"
               bg="transparent"
               color={iconColor}
@@ -41,7 +43,7 @@ const Sidebar = ({ isExpand }: Properties) => {
             />
             {isExpand && (
               <Text ml={4} color={textColor}>
-                Search
+                label 1
               </Text>
             )}
           </Flex>
@@ -49,7 +51,7 @@ const Sidebar = ({ isExpand }: Properties) => {
           <Flex align="center" w="full">
             <IconButton
               size="md"
-              icon={<RepeatIcon />}
+              icon={<MdLabel />}
               aria-label="Refresh"
               bg="transparent"
               color={iconColor}
@@ -57,7 +59,7 @@ const Sidebar = ({ isExpand }: Properties) => {
             />
             {isExpand && (
               <Text ml={4} color={textColor}>
-                Refresh
+                label 2
               </Text>
             )}
           </Flex>
@@ -65,7 +67,7 @@ const Sidebar = ({ isExpand }: Properties) => {
           <Flex align="center" w="full">
             <IconButton
               size="md"
-              icon={<SettingsIcon />}
+              icon={<MdLabel />}
               aria-label="Settings"
               bg="transparent"
               color={iconColor}
@@ -73,7 +75,7 @@ const Sidebar = ({ isExpand }: Properties) => {
             />
             {isExpand && (
               <Text ml={4} color={textColor}>
-                Settings
+                label 3
               </Text>
             )}
           </Flex>

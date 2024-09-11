@@ -29,6 +29,8 @@ const Home = () => {
           <Sidebar isExpand={isExpanded} />
           <Flex
             w={"100%"}
+            flex={1}
+            overflowY={"auto"}
             h={"100%"}
             flexDir={"column"}
             justifyContent={"center"}

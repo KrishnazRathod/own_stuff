@@ -18,6 +18,8 @@ import {
   MdDragIndicator,
 } from "react-icons/md";
 import { GoPin } from "react-icons/go";
+import { useDispatch } from "react-redux";
+import { deleteNote } from "../../redux/NotesSlice";
 
 const ExpandableCard = ({
   id,
@@ -34,6 +36,7 @@ const ExpandableCard = ({
   const [noteValue, setNoteValue] = useState(note);
   const [headingValue, setHeadingValue] = useState(heading);
   const [currentHeight, setCurrentHeight] = useState(0);
+  const dispatch = useDispatch(); // Use dispatch for actions
 
   const roundUpToNearest100 = (number: any) => {
     return Math.ceil(number / 100) * 100;
@@ -70,6 +73,11 @@ const ExpandableCard = ({
   const textColor = useColorModeValue("black", "white");
   const hoverBg = useColorModeValue("gray.300", "gray.700");
   const iconColor = useColorModeValue("black", "white");
+
+  const handleDelete = () => {
+    // Dispatch deleteNote action with the note id
+    dispatch(deleteNote(id));
+  };
 
   return (
     <Box
@@ -170,6 +178,7 @@ const ExpandableCard = ({
             bg="transparent"
             color={iconColor}
             _hover={{ bg: hoverBg }}
+            onClick={handleDelete} // Call handleDelete on click
           />
           <Button onClick={() => setIsExpanded(false)} variant="ghost">
             Close

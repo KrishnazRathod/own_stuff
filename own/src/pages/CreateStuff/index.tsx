@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import {
   Box,
   Flex,
@@ -9,7 +9,6 @@ import {
   Input,
   Button,
 } from "@chakra-ui/react";
-import { AttachmentIcon } from "@chakra-ui/icons";
 import {
   MdLabelOutline,
   MdOutlineColorLens,
@@ -18,18 +17,16 @@ import {
   MdDelete,
 } from "react-icons/md";
 import { GoPin } from "react-icons/go";
+import { useDispatch } from "react-redux";
+import { createNote } from "../../redux/NotesSlice";
 
 const ExpandableInputComponent = () => {
-  // State to track whether the component is expanded or collapsed
   const [isExpanded, setIsExpanded] = useState(false);
-
-  // Ref for the Textarea to manage its height
-  const textareaRef = useRef(null);
-
-  // Function to toggle the expanded state
-  const toggleExpand = () => {
-    setIsExpanded(!isExpanded);
-  };
+  const [inputValue, setInputValue] = useState(""); // State to manage input value
+  const [noteDesc, setNoteDesc] = useState(""); // State to manage note description
+  const dispatch: any = useDispatch();
+  const textareaRef: any = useRef(null);
+  const componentRef = useRef(null); // Ref for the entire component
 
   // Function to adjust the height of the textarea automatically
   const handleInput = () => {
@@ -44,8 +41,44 @@ const ExpandableInputComponent = () => {
   const hoverBg = useColorModeValue("gray.300", "gray.700"); // Hover effect color
   const iconColor = useColorModeValue("black", "white"); // Icon color
 
+  // Use effect to handle clicks outside the component
+  useEffect(() => {
+    const handleClickOutside = async (event: MouseEvent) => {
+      if (
+        componentRef.current &&
+        !componentRef.current.contains(event.target)
+      ) {
+        if (inputValue || noteDesc) {
+          const requestBody = {
+            heading: inputValue,
+            note: noteDesc,
+            isArchive: false,
+            isTrash: false,
+          };
+          await dispatch(createNote(requestBody));
+        }
+        setInputValue(""); // Clear the input value
+        setNoteDesc(""); // Clear the note description
+        setIsExpanded(false); // Collapse the component
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [inputValue, noteDesc, dispatch]);
+
+  // Handle closing without dispatching
+  const handleClose = () => {
+    setIsExpanded(false);
+    setInputValue(""); // Clear the input value
+    setNoteDesc(""); // Clear the note description
+  };
+
   return (
     <Box
+      ref={componentRef} // Attach ref to the component
       bg={bgColor}
       p={4}
       borderRadius="md"
@@ -66,7 +99,12 @@ const ExpandableInputComponent = () => {
           setIsExpanded(true);
         }}
       >
-        <Input color={textColor} placeholder="Basic usage" />
+        <Input
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          color={textColor}
+          placeholder="Basic usage"
+        />
         <IconButton
           size="md"
           icon={<GoPin />}
@@ -81,6 +119,8 @@ const ExpandableInputComponent = () => {
       {isExpanded && (
         <Textarea
           ref={textareaRef}
+          value={noteDesc}
+          onChange={(e) => setNoteDesc(e.target.value)}
           onInput={handleInput} // Adjust height on input
           placeholder="Type your message here..."
           bg={inputBgColor}
@@ -130,16 +170,13 @@ const ExpandableInputComponent = () => {
           <IconButton
             size="md"
             icon={<MdDelete />}
-            aria-label="More"
+            aria-label="Delete"
             bg="transparent"
             color={iconColor}
             _hover={{ bg: hoverBg }}
           />
           <Button
-            onClick={() => {
-              setIsExpanded(false);
-            }}
-            // colorScheme="teal"
+            onClick={handleClose} // Call handleClose to clear fields
             variant="ghost"
           >
             Close

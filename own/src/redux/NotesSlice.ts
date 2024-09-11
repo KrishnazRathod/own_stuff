@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import exp from "constants";
 import axios from "axios";
 
 const REACT_APP_NOTES_URL = import.meta.env.VITE_NOTES_URL;
@@ -28,6 +27,42 @@ export const fetchNotes = createAsyncThunk(
   }
 );
 
+export const createNote = createAsyncThunk(
+  "notes/post",
+  async (requestBody: any, thunkAPI: any) => {
+    try {
+      const response = await axios.post(
+        `${REACT_APP_NOTES_URL}/notes`,
+        requestBody,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const deleteNote = createAsyncThunk(
+  "notes/delete",
+  async (noteId: string, thunkAPI: any) => {
+    try {
+      await axios.delete(`${REACT_APP_NOTES_URL}/notes/${noteId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return noteId;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
 const notesSlice = createSlice({
   name: "notesSlice",
   initialState,
@@ -36,8 +71,17 @@ const notesSlice = createSlice({
     builder.addCase(fetchNotes.fulfilled, (state, action) => {
       state.notes = action.payload;
     });
+    builder.addCase(createNote.fulfilled, (state, action) => {
+      console.log("action.payload: ", action.payload);
+      state.notes.push(action.payload);
+    });
+    builder.addCase(deleteNote.fulfilled, (state, action) => {
+      const noteId = action.payload;
+      state.notes = state.notes.filter((note: any) => note._id !== noteId);
+    });
   },
 });
+
 export const getNotes = (state: any) => state.notesSlice.notes;
 
 export default notesSlice.reducer;
