@@ -3,15 +3,20 @@ import {
   createNote,
   deleteNote,
   getAllNotes,
+  getNote,
   updateNote,
 } from "../controller/notesController.js";
+import { validateToken } from "../middleware/validateTokenhandler.js";
 
 const router = express.Router();
 
+router.use(validateToken);
+
 router
-  .get("/notes", getAllNotes)
-  .post("/note", createNote)
-  .put("/note/:id", updateNote)
-  .delete("/note/:id", deleteNote);
+  .get("/", getAllNotes)
+  .get("/:id", getNote)
+  .post("/", createNote)
+  .put("/:id", updateNote)
+  .delete("/:id", deleteNote);
 
 export default router;

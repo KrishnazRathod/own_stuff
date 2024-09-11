@@ -2,6 +2,11 @@ import mongoose from "mongoose";
 
 const notesSchema = new mongoose.Schema(
   {
+    user_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "Note",
+    },
     heading: {
       type: String,
       required: false,
