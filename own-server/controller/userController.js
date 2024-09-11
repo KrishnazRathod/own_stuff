@@ -64,7 +64,7 @@ export const userLogin = asyncHandler(async (req, res) => {
         },
         process.env.ACCESS_TOKEN,
         {
-          expiresIn: "50m",
+          expiresIn: "500000m",
         }
       );
       returnResult(res, accessToken);
