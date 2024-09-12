@@ -23,8 +23,10 @@ const Home = () => {
 
   return (
     <>
-      <Flex flexDir={"column"} bg={bgColor}>
-        <Navbar setIsExpand={setIsExpanded} isExpand={isExpanded} />
+      <Flex flexDir={"column"} minH={"100vh"} h={"100%"} bg={bgColor}>
+        <Box position="sticky" top="0" width="100%" zIndex="1000" bg={bgColor}>
+          <Navbar setIsExpand={setIsExpanded} isExpand={isExpanded} />
+        </Box>
         <Flex>
           <Sidebar isExpand={isExpanded} />
           <Flex
@@ -38,7 +40,7 @@ const Home = () => {
             <Box>
               <ExpandableInputComponent />
             </Box>
-            <Box>
+            <Box overflowY={"auto"}>
               <CustomizableCardGrid />
             </Box>
           </Flex>

@@ -70,10 +70,10 @@ export const updateNote = asyncHandler(async (req, res) => {
   });
 
   console.log("updateNote:", updateNote);
-  if (updateNote.user_id.toString() !== req.user.id) {
-    unauthorizedMessage(res, "unauthorized");
-    throw new Error("unauthorized");
-  } 
+  // if (updateNote.user_id.toString() !== req.user.id) {
+  //   unauthorizedMessage(res, "unauthorized");
+  //   throw new Error("unauthorized");
+  // }
   //   if (!notes) {
   //     returnError(res, "No notes found");
   //     throw new Error("not found");

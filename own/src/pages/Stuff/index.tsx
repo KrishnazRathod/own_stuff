@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
 import GridLayout from "react-grid-layout";
 import "react-grid-layout/css/styles.css";
@@ -60,13 +61,7 @@ const CustomizableCardGrid = () => {
         {notes.map((note: any) => (
           <div key={note._id}>
             <ExpandableCard
-              id={note._id}
-              heading={note.heading}
-              note={note.note}
-              isArchive={note.isArchive}
-              isTrash={note.isTrash}
-              createdAt={note.createdAt}
-              updatedAt={note.updatedAt}
+              noteData={note}
               onHeightChange={(height: number) =>
                 updateCardHeight(note._id, height)
               } // Callback to update height

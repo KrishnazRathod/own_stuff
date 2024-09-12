@@ -10,25 +10,24 @@ import {
 } from "@chakra-ui/react";
 import { SearchIcon, RepeatIcon, SettingsIcon } from "@chakra-ui/icons";
 import { MdLabel } from "react-icons/md";
+import { useSelector } from "react-redux";
+import { getModeCss } from "../../redux/NotesSlice";
 
 interface Properties {
   isExpand?: any;
 }
 const Sidebar = ({ isExpand }: Properties) => {
   // Dynamic colors based on theme
-  const bgColor = useColorModeValue("gray.100", "gray.800");
-  const iconColor = useColorModeValue("black", "white");
-  const hoverBg = useColorModeValue("gray.300", "gray.700");
-  const textColor = useColorModeValue("black", "white");
+  const modeCss = useSelector(getModeCss);
 
   return (
     <Flex>
       <Box
-        bg={bgColor}
+        bg={modeCss.bgColor}
         w={isExpand ? "200px" : "60px"}
         h="95%"
         p={4}
-        color={textColor}
+        color={modeCss.textColor}
         transition="width 0.2s"
       >
         <VStack spacing={4} alignItems={isExpand ? "flex-start" : "center"}>
@@ -38,11 +37,11 @@ const Sidebar = ({ isExpand }: Properties) => {
               icon={<MdLabel />}
               aria-label="Search"
               bg="transparent"
-              color={iconColor}
-              _hover={{ bg: hoverBg }}
+              color={modeCss.iconColor}
+              _hover={{ bg: modeCss.hoverBg }}
             />
             {isExpand && (
-              <Text ml={4} color={textColor}>
+              <Text ml={4} color={modeCss.textColor}>
                 label 1
               </Text>
             )}
@@ -54,11 +53,11 @@ const Sidebar = ({ isExpand }: Properties) => {
               icon={<MdLabel />}
               aria-label="Refresh"
               bg="transparent"
-              color={iconColor}
-              _hover={{ bg: hoverBg }}
+              color={modeCss.iconColor}
+              _hover={{ bg: modeCss.hoverBg }}
             />
             {isExpand && (
-              <Text ml={4} color={textColor}>
+              <Text ml={4} color={modeCss.textColor}>
                 label 2
               </Text>
             )}
@@ -70,11 +69,11 @@ const Sidebar = ({ isExpand }: Properties) => {
               icon={<MdLabel />}
               aria-label="Settings"
               bg="transparent"
-              color={iconColor}
-              _hover={{ bg: hoverBg }}
+              color={modeCss.iconColor}
+              _hover={{ bg: modeCss.hoverBg }}
             />
             {isExpand && (
-              <Text ml={4} color={textColor}>
+              <Text ml={4} color={modeCss.textColor}>
                 label 3
               </Text>
             )}
