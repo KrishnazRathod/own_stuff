@@ -27,7 +27,6 @@ import { AppDispatch } from "../../redux/store/store";
 const ExpandableCard = ({ noteData, onHeightChange }: any) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const modeCss = useSelector(getModeCss);
-  console.log("modeCss:", modeCss);
 
   const [currentHeight, setCurrentHeight] = useState(0);
   const dispatch: AppDispatch = useDispatch();
@@ -72,7 +71,7 @@ const ExpandableCard = ({ noteData, onHeightChange }: any) => {
         flexDir={"column"}
         justifyContent={"space-between"}
         bg={modeCss.bgColor}
-        p={4}
+        p={1}
         borderRadius="md"
         height="100%"
         boxShadow="md"

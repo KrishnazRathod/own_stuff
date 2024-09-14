@@ -15,6 +15,7 @@ const Home = () => {
   const dispatch: any = useDispatch();
   console.log("note:", note);
 
+
   useEffect(() => {
     dispatch(fetchNotes()).then((response: any) => {
       setNotes(response.payload);
@@ -28,7 +29,7 @@ const Home = () => {
           <Navbar setIsExpand={setIsExpanded} isExpand={isExpanded} />
         </Box>
         <Flex>
-          <Sidebar isExpand={isExpanded} />
+          <Sidebar isExpand={isExpanded} setIsExpand={setIsExpanded} />
           <Flex
             w={"100%"}
             flex={1}

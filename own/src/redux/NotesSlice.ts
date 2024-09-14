@@ -1,13 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { stat } from "fs";
 
 const REACT_APP_NOTES_URL = import.meta.env.VITE_NOTES_URL;
-console.log("REACT_APP_NOTES_URL:", REACT_APP_NOTES_URL);
 
 const token =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiZmlyc3Qgbm90ZSIsImVtYWlsIjoiYWJjZEBkcy5jb20iLCJpZCI6IjY2ZTE3NzRkOGYxZmU1ZmMyMWMxMjQxOCJ9LCJpYXQiOjE3MjYwNTIxODEsImV4cCI6MTcyNjM1MjE4MX0.jTu9m0X_B6KBc9e8MG3jFfTUxj6NVtflli5OKwk-8-s";
+
 const initialState: any = {
   notes: [],
   modeCss: {
@@ -111,7 +110,6 @@ const notesSlice = createSlice({
       state.notes = action.payload;
     });
     builder.addCase(createNote.fulfilled, (state, action) => {
-      console.log("action.payload: ", action.payload);
       state.notes.push(action.payload);
     });
     builder.addCase(deleteNote.fulfilled, (state, action) => {
@@ -131,6 +129,7 @@ const notesSlice = createSlice({
 });
 
 export const { HandleModeCss } = notesSlice.actions;
+
 export const getNotes = (state: any) => state.notesSlice.notes;
 export const getModeCss = (state: any) => state.notesSlice.modeCss;
 

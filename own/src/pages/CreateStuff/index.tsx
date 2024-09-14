@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useRef, useState, useEffect } from "react";
 import {
@@ -20,23 +21,22 @@ import {
 import { GoPin } from "react-icons/go";
 import { useDispatch, useSelector } from "react-redux";
 import { createNote, getModeCss } from "../../redux/NotesSlice";
+import { AppDispatch } from "../../redux/store/store";
 
 const ExpandableInputComponent = () => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [inputValue, setInputValue] = useState(""); // State to manage input value
-  const [noteDesc, setNoteDesc] = useState(""); // State to manage note description
-  const dispatch: any = useDispatch();
+  const [inputValue, setInputValue] = useState("");
+  const [noteDesc, setNoteDesc] = useState("");
+  const dispatch: AppDispatch = useDispatch();
   const textareaRef: any = useRef(null);
-  const componentRef = useRef(null); // Ref for the entire component
+  const componentRef = useRef(null);
   const modeCss = useSelector(getModeCss);
 
-  // Function to adjust the height of the textarea automatically
   const handleInput = () => {
-    textareaRef.current.style.height = "auto"; // Reset the height to calculate the new height
-    textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`; // Set the height to match the content
+    textareaRef.current.style.height = "auto";
+    textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
   };
 
-  // Use effect to handle clicks outside the component
   useEffect(() => {
     const handleClickOutside = async (event: MouseEvent) => {
       if (
@@ -52,9 +52,9 @@ const ExpandableInputComponent = () => {
           };
           await dispatch(createNote(requestBody));
         }
-        setInputValue(""); // Clear the input value
-        setNoteDesc(""); // Clear the note description
-        setIsExpanded(false); // Collapse the component
+        setInputValue("");
+        setNoteDesc("");
+        setIsExpanded(false);
       }
     };
 
@@ -64,18 +64,17 @@ const ExpandableInputComponent = () => {
     };
   }, [inputValue, noteDesc, dispatch]);
 
-  // Handle closing without dispatching
   const handleClose = () => {
     setIsExpanded(false);
-    setInputValue(""); // Clear the input value
-    setNoteDesc(""); // Clear the note description
+    setInputValue("");
+    setNoteDesc("");
   };
 
   return (
     <Box
-      ref={componentRef} // Attach ref to the component
+      ref={componentRef}
       bg={modeCss.bgColor}
-      p={4}
+      p={2}
       borderRadius="md"
       height={"100%"}
       boxShadow="md"
@@ -84,7 +83,6 @@ const ExpandableInputComponent = () => {
       mt={"20px"}
       transition="all 0.3s"
     >
-      {/* First row: Heading and Pin icon */}
       <Flex
         justifyContent="space-between"
         mb={2}
@@ -110,24 +108,22 @@ const ExpandableInputComponent = () => {
         />
       </Flex>
 
-      {/* Second row: Textarea input (Full width) - visible only when expanded */}
       {isExpanded && (
         <Textarea
           ref={textareaRef}
-          onInput={handleInput} // Adjust height on input
+          onInput={handleInput}
           value={noteDesc}
           onChange={(e) => setNoteDesc(e.target.value)}
           placeholder="Type your message here..."
           bg={modeCss.inputBgColor}
           color={modeCss.textColor}
           _placeholder={{ color: useColorModeValue("gray.500", "gray.400") }}
-          mb={4}
-          resize="none" // Disable manual resizing, handle resizing automatically
-          overflow="hidden" // Hide scrollbars, auto-adjust height
+          mb={1}
+          resize="none"
+          overflow="hidden"
         />
       )}
 
-      {/* Third row: Icons - visible only when expanded */}
       {isExpanded && (
         <HStack spacing={4} justifyContent="flex-end">
           <IconButton
@@ -170,10 +166,7 @@ const ExpandableInputComponent = () => {
             color={modeCss.iconColor}
             _hover={{ bg: modeCss.hoverBg }}
           />
-          <Button
-            onClick={handleClose} // Call handleClose to clear fields
-            variant="ghost"
-          >
+          <Button onClick={handleClose} variant="ghost">
             Close
           </Button>
         </HStack>
