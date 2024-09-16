@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 8000;
 
 app.use(
   cors({
-    origin: "http://localhost:5173/",
+    origin: "https://own-stuff-l1api09s3-krishnazrathods-projects.vercel.app/",
     // origin: "https://own-stuff-1.onrender.com",
     methods: "GET, POST, PUT, DELETE",
     allowedHeaders: "Content-Type, Authorization",
