@@ -16,15 +16,20 @@ import {
 
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
+import { AppDispatch } from "../../redux/store/store";
+import { useDispatch } from "react-redux";
+import { signupUser } from "../../redux/NotesSlice";
+import { useNavigate } from "react-router-dom";
 
 const SignUpPage = () => {
+  const dispatch: AppDispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [showPassword, setShowPassword] = useState(false);
   const toast = useToast();
 
-  // Toggle Password Visibility
   const handleShowClick = () => setShowPassword(!showPassword);
 
-  // Validation Schema using Yup
   const validationSchema = Yup.object({
     name: Yup.string().required("Name is required"),
     email: Yup.string()
@@ -38,15 +43,24 @@ const SignUpPage = () => {
       .required("Confirm Password is required"),
   });
 
-  // Form Submit Handler
   const handleSubmit = (values: any) => {
     console.log(values);
-    toast({
-      title: "Account Created!",
-      description: "You've successfully signed up.",
-      status: "success",
-      duration: 5000,
-      isClosable: true,
+
+    const credentials: any = {
+      username: values.name,
+      email: values.email,
+      password: values.confirmPassword,
+    };
+
+    dispatch(signupUser(credentials)).then(() => {
+      toast({
+        title: "Account Created!",
+        description: "You've successfully signed up.",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      });
+      navigate("/login");
     });
   };
 
@@ -94,7 +108,6 @@ const SignUpPage = () => {
                 )}
               </Field>
 
-              {/* Email Field */}
               <Field name="email">
                 {({ field, form }: any) => (
                   <FormControl

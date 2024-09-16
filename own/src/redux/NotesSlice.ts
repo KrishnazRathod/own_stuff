@@ -5,10 +5,12 @@ import axios from "axios";
 const REACT_APP_NOTES_URL = import.meta.env.VITE_NOTES_URL;
 
 const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiZmlyc3Qgbm90ZSIsImVtYWlsIjoiYWJjZEBkcy5jb20iLCJpZCI6IjY2ZTE3NzRkOGYxZmU1ZmMyMWMxMjQxOCJ9LCJpYXQiOjE3MjYwNTIxODEsImV4cCI6MTcyNjM1MjE4MX0.jTu9m0X_B6KBc9e8MG3jFfTUxj6NVtflli5OKwk-8-s";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiZGF5IDQgIiwiZW1haWwiOiJjQGdtYWlsLmNvbSIsImlkIjoiNjZlMDJhZDY4ZDc4OWNiOTRmYjA3YmUxIn0sImlhdCI6MTcyNjQwNzg2NSwiZXhwIjoxNzU2NDA3ODY1fQ.RZgAAYdlH0TENfMO7RC1g-bj_S9uQQYONQypzu5rwPM";
 
 const initialState: any = {
   notes: [],
+  user: null,
+  userToken: null,
   modeCss: {
     bgColor: "gray.100",
     inputBgColor: "gray.200",
@@ -90,6 +92,39 @@ export const updateNote = createAsyncThunk(
   }
 );
 
+export const loginUser = createAsyncThunk(
+  "auth/login",
+  async (credentials: { email: string; password: string }, thunkAPI: any) => {
+    try {
+      const response = await axios.post(
+        `${REACT_APP_NOTES_URL}/users/login`,
+        credentials
+      );
+      return response.data;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const signupUser = createAsyncThunk(
+  "auth/signup",
+  async (
+    signupData: { username: string; email: string; password: string },
+    thunkAPI: any
+  ) => {
+    try {
+      const response = await axios.post(
+        `${REACT_APP_NOTES_URL}/users/register`,
+        signupData
+      );
+      return response.data;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
 const notesSlice = createSlice({
   name: "notesSlice",
   initialState,
@@ -104,8 +139,12 @@ const notesSlice = createSlice({
       };
       state.modeCss = modeCssProp;
     },
+    logout: (state) => {
+      state.user = null;
+    },
   },
   extraReducers: (builder) => {
+    // Handle Notes
     builder.addCase(fetchNotes.fulfilled, (state, action) => {
       state.notes = action.payload;
     });
@@ -125,12 +164,21 @@ const notesSlice = createSlice({
         state.notes[index] = updatedNote;
       }
     });
+
+    builder.addCase(loginUser.fulfilled, (state, action) => {
+      state.userToken = action.payload;
+    });
+    builder.addCase(signupUser.fulfilled, (state, action) => {
+      state.user = action.payload;
+    });
   },
 });
 
-export const { HandleModeCss } = notesSlice.actions;
+export const { HandleModeCss, logout } = notesSlice.actions;
 
 export const getNotes = (state: any) => state.notesSlice.notes;
 export const getModeCss = (state: any) => state.notesSlice.modeCss;
+export const getUser = (state: any) => state.notesSlice.user;
+export const getUserToken = (state: any) => state.notesSlice.userToken;
 
 export default notesSlice.reducer;

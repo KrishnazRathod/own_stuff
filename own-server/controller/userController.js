@@ -20,7 +20,7 @@ export const getAllUsers = asyncHandler(async (req, res) => {
 
 export const userRegister = asyncHandler(async (req, res) => {
   const { username, email, phone, password } = req.body;
-  if (!username || !email || !phone || !password) {
+  if (!username || !email || !password) {
     returnError(res, "All fields are mandetory");
     throw new Error("All fields are mandetory");
   } else {
@@ -48,7 +48,7 @@ export const userRegister = asyncHandler(async (req, res) => {
 
 export const userLogin = asyncHandler(async (req, res) => {
   const { username, email, phone, password } = req.body;
-  if (!username || !email || !phone || !password) {
+  if (!email || !password) {
     returnError(res, "All fields are mandetory");
     throw new Error("All fields are mandetory");
   } else {
@@ -76,5 +76,5 @@ export const userLogin = asyncHandler(async (req, res) => {
 });
 
 export const currentUser = asyncHandler(async (req, res) => {
-  console.log(" currentUser");
+  returnResult(res, "login");
 });

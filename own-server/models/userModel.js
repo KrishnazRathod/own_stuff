@@ -4,7 +4,7 @@ const userSchema = new mongoose.Schema(
   {
     username: {
       type: String,
-      required: [true, "please enter name"],
+      required: false,
     },
     email: {
       type: String,
@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema(
     },
     phone: {
       type: Number,
-      required: [true, "please enter phone no."],
+      required: false,
     },
     password: {
       type: String,

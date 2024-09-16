@@ -14,9 +14,15 @@ import {
 } from "@chakra-ui/react";
 import { Formik, Field, Form } from "formik";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import * as Yup from "yup";
+import { AppDispatch } from "../../redux/store/store";
+import { loginUser } from "../../redux/NotesSlice";
+import { useNavigate } from "react-router-dom";
 
 const SignInPage = () => {
+  const dispatch: AppDispatch = useDispatch();
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const toast = useToast();
 
@@ -33,12 +39,19 @@ const SignInPage = () => {
 
   const handleSubmit = (values: any) => {
     console.log(values);
-    toast({
-      title: "Login Successful!",
-      description: "You've successfully logged in.",
-      status: "success",
-      duration: 5000,
-      isClosable: true,
+    const credentials = {
+      email: values.email,
+      password: values.password,
+    };
+    dispatch(loginUser(credentials)).then(() => {
+      toast({
+        title: "Login Successful!",
+        description: "You've successfully logged in.",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      });
+      navigate("/home");
     });
   };
   return (
@@ -66,7 +79,6 @@ const SignInPage = () => {
         >
           {({ isSubmitting }) => (
             <Form>
-              {/* Email Field */}
               <Field name="email">
                 {({ field, form }: any) => (
                   <FormControl
@@ -85,7 +97,6 @@ const SignInPage = () => {
                 )}
               </Field>
 
-              {/* Password Field */}
               <Field name="password">
                 {({ field, form }: any) => (
                   <FormControl
@@ -111,7 +122,6 @@ const SignInPage = () => {
                 )}
               </Field>
 
-              {/* Submit Button */}
               <Button
                 type="submit"
                 colorScheme="teal"
