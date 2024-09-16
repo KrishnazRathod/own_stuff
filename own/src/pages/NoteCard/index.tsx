@@ -25,7 +25,7 @@ import NoteModal from "../NoteModal";
 import { AppDispatch } from "../../redux/store/store";
 
 const ExpandableCard = ({ noteData, onHeightChange }: any) => {
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const textareaRef = useRef<any>(null);
   const modeCss = useSelector(getModeCss);
 
   const [currentHeight, setCurrentHeight] = useState(0);

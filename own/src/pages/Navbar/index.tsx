@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
   Box,
   Flex,
@@ -9,7 +9,6 @@ import {
   InputLeftElement,
   HStack,
   useColorMode,
-  useColorModeValue,
   Avatar,
 } from "@chakra-ui/react";
 import {

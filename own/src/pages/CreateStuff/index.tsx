@@ -29,7 +29,7 @@ const ExpandableInputComponent = () => {
   const [noteDesc, setNoteDesc] = useState("");
   const dispatch: AppDispatch = useDispatch();
   const textareaRef: any = useRef(null);
-  const componentRef = useRef(null);
+  const componentRef = useRef<any>(null);
   const modeCss = useSelector(getModeCss);
 
   const handleInput = () => {

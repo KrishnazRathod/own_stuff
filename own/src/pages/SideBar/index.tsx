@@ -1,14 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState } from "react";
-import {
-  Box,
-  Flex,
-  IconButton,
-  VStack,
-  Text,
-  useColorModeValue,
-} from "@chakra-ui/react";
-import { SearchIcon, RepeatIcon, SettingsIcon } from "@chakra-ui/icons";
+import { Box, Flex, IconButton, VStack, Text } from "@chakra-ui/react";
 import { MdLabel } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { getModeCss } from "../../redux/NotesSlice";

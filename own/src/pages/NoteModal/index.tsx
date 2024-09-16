@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
-  Button,
   Flex,
   HStack,
   IconButton,
@@ -28,7 +27,7 @@ import { AppDispatch } from "../../redux/store/store";
 
 const NoteModal = ({ note, isModalOpen, onModalOpen, onModalClose }: any) => {
   const dispatch: AppDispatch = useDispatch();
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const textareaRef = useRef<any>(null);
 
   const modeCss = useSelector(getModeCss);
   const [noteValue, setNoteValue] = useState(note.note);
